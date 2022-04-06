@@ -7,3 +7,16 @@
  * - 인증 로직은 넣지 않는다
  * - RESTful API를 사용한다
  */
+
+const http = require('http')
+
+const server = http.createServer((req, res) => {
+  res.statusCode = 200
+  res.end('Hello!')
+})
+
+const PORT = 4000
+
+server.listen(PORT, () => {
+  console.log(`The Server is listening at ${PORT}`)
+})
