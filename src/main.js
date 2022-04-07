@@ -19,12 +19,18 @@ const http = require('http')
  */
 
 const server = http.createServer((req, res) => {
+  const POST_ID_REGEX = /^\/posts\/([a-zA-Z0-9-_]+$)/ // 정규식 안에 () 캡쳐를 하면 원하는 부분이 추출 된다.
+  const postIdRegesResult =
+    (req.url && POST_ID_REGEX.exec(req.url)) || undefined
   if (req.url === '/posts' && req.method === 'GET') {
     res.statusCode = 200
     res.end('List of posts')
-  } else if (req.url && /^\/posts\/[a-zA-Z0-9-_]+$/.test(req.url)) {
+  } else if (postIdRegesResult) {
+    // GET /posts/:id
+    const postId = postIdRegesResult[1]
+    console.log(`postId: ${postId}`)
     res.statusCode = 200
-    res.end('Some content of the post')
+    res.end('Reading a post')
   } else if (req.url === '/posts' && req.method === 'POST') {
     res.statusCode = 200
     res.end('Creating post')
